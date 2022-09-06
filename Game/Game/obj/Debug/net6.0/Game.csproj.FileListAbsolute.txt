@@ -21,3 +21,11 @@ R:\Projects\Game\Game\obj\Debug\net6.0\Game.csproj.CoreCompileInputs.cache
 R:\Projects\Game\Game\obj\Debug\net6.0\Game.dll
 R:\Projects\Game\Game\obj\Debug\net6.0\refint\Game.dll
 R:\Projects\Game\Game\obj\Debug\net6.0\Game.pdb
+R:\Projects\Github\GameMap\Game\Game\obj\Debug\net6.0\Game.csproj.AssemblyReference.cache
+R:\Projects\Github\GameMap\Game\Game\obj\Debug\net6.0\Game.GeneratedMSBuildEditorConfig.editorconfig
+R:\Projects\Github\GameMap\Game\Game\obj\Debug\net6.0\Game.AssemblyInfoInputs.cache
+R:\Projects\Github\GameMap\Game\Game\obj\Debug\net6.0\Game.AssemblyInfo.cs
+R:\Projects\Github\GameMap\Game\Game\obj\Debug\net6.0\Game.csproj.CoreCompileInputs.cache
+R:\Projects\Github\GameMap\Game\Game\obj\Debug\net6.0\Game.dll
+R:\Projects\Github\GameMap\Game\Game\obj\Debug\net6.0\refint\Game.dll
+R:\Projects\Github\GameMap\Game\Game\obj\Debug\net6.0\Game.pdb

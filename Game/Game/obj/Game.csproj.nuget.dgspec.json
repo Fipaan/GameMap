@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "R:\\Projects\\Game\\Game\\Game.csproj": {}
+    "R:\\Projects\\Github\\GameMap\\Game\\Game\\Game.csproj": {}
   },
   "projects": {
-    "R:\\Projects\\Game\\Game\\Game.csproj": {
+    "R:\\Projects\\Github\\GameMap\\Game\\Game\\Game.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "R:\\Projects\\Game\\Game\\Game.csproj",
+        "projectUniqueName": "R:\\Projects\\Github\\GameMap\\Game\\Game\\Game.csproj",
         "projectName": "Game",
-        "projectPath": "R:\\Projects\\Game\\Game\\Game.csproj",
+        "projectPath": "R:\\Projects\\Github\\GameMap\\Game\\Game\\Game.csproj",
         "packagesPath": "C:\\Users\\Roma\\.nuget\\packages\\",
-        "outputPath": "R:\\Projects\\Game\\Game\\obj\\",
+        "outputPath": "R:\\Projects\\Github\\GameMap\\Game\\Game\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "R:\\VSdk\\Tools\\NuGetPackages"

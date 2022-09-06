@@ -178,6 +178,7 @@ namespace game
             int capY = array.GetLength(1);
             int x = rnd.Next(capX);
             int y = rnd.Next(capY);
+            int z = x - y;
             if (isEmpty)
             {
                 while (!Equals(array[x, y], Blocks.Empty))
