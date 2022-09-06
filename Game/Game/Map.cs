@@ -61,23 +61,17 @@ namespace game
         public Blocks[,] field = new Blocks[1, 1];
         
         //Create new array with size [x, y] filled with values
-        public static void Fill(int[] size, Blocks value, ref Blocks[,] array){
+        public static void Fill<T>(int[] size, T value, ref T[,] array){
             int x = size[0];
             int y = size[1];
-            array = new Blocks[x, y];
-            for(int i = 0; i < array.GetLength(0); i++)
+            array = new T[x, y];
+            for(int i = 0; i < x; i++)
             {
-                for(int j = 0; j < array.GetLength(1); j++)
+                for(int j = 0; j < y; j++)
                 {
                     array[i, j] = value;
                 }
             }
-        }
-        //Create new array with size [x, x] filled with values
-        public static void FillSquare(int x, Blocks value, ref Blocks[,] array)
-        {
-            int[] size = {x, x};
-            Fill(size, value, ref array);
         }
         //Fill array by pattern
         public static void Pattern(TypesPattern type, ref Blocks[,] array)
@@ -171,14 +165,13 @@ namespace game
         ///#CreateObject
         
         //Create one object in random position
-        public static void CreateOne<T>(T input, ref T[,] array, bool isEmpty)
+        public static void CreateOneAtRandom<T>(T input, ref T[,] array, bool isEmpty)
         {
             Random rnd = new();
             int capX = array.GetLength(0);
             int capY = array.GetLength(1);
             int x = rnd.Next(capX);
             int y = rnd.Next(capY);
-            int z = x - y;
             if (isEmpty)
             {
                 while (!Equals(array[x, y], Blocks.Empty))
@@ -190,27 +183,31 @@ namespace game
             array[x, y] = input;
         }
         //Create *count* of objects in random positions
-        public static void CreateNew<T>(T value, int count, ref T[,] array, bool isEmpty)
+        public static void CreateAtRandom<T>(T value, int count, ref T[,] array, bool isEmpty)
         {
-            int countEmpty = Counter(Blocks.Empty,System.Convert.ChangeType(array, Blocks));
-            if(countEmpty == 0) { return; }
-            if(countEmpty < count) { count = countEmpty; }
+            int countEmpty;
+            if (isEmpty)
+            {
+                countEmpty = Counter(Blocks.Empty, (Blocks[,])System.Convert.ChangeType(array, typeof(Blocks[,])));
+                if(countEmpty == 0) { return; }
+                if(countEmpty < count) { count = countEmpty; }
+            }
             for (int i = 0; i < count; i++)
             {
-                CreateOne(value, ref array, isEmpty);
+                CreateOneAtRandom(value, ref array, isEmpty);
             }
         }
-        //Value-Dependent Object Creation Function
-        public static void Create(Blocks type, int count, ref Blocks[,] array)
+        //Value-Dependent Object Creation Function (random)
+        public static void FlexibleCreateAtRandom(Blocks type, int count, ref Blocks[,] array, bool isEmpty)
         {
             switch (type)
             {
                 case Blocks.Enemy:
-                    CreateNew(Blocks.Enemy, count, ref array);
+                    CreateAtRandom(Blocks.Enemy, count, ref array, isEmpty);
                     AroundAll(Blocks.Enemy, Blocks.Death, ref array);
                     break;
                 default:
-                    CreateNew(type, count, ref array);
+                    CreateAtRandom(type, count, ref array, isEmpty);
                     break;
             }
         }

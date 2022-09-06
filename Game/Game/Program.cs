@@ -6,7 +6,6 @@ namespace game
         public static void Main(string[] args)
         {
             Map game = new();
-            int arofl = 1122212;
             int[] size = { 15, 15 };
             TypesPattern pattern = TypesPattern.FullDots;
             System.Object[,] arguments =
