@@ -29,3 +29,10 @@ R:\Projects\Github\GameMap\Game\Game\obj\Debug\net6.0\Game.csproj.CoreCompileInp
 R:\Projects\Github\GameMap\Game\Game\obj\Debug\net6.0\Game.dll
 R:\Projects\Github\GameMap\Game\Game\obj\Debug\net6.0\refint\Game.dll
 R:\Projects\Github\GameMap\Game\Game\obj\Debug\net6.0\Game.pdb
+R:\Projects\Github\GameMap\Game\Game\bin\Debug\net6.0\Game.exe
+R:\Projects\Github\GameMap\Game\Game\bin\Debug\net6.0\Game.deps.json
+R:\Projects\Github\GameMap\Game\Game\bin\Debug\net6.0\Game.runtimeconfig.json
+R:\Projects\Github\GameMap\Game\Game\bin\Debug\net6.0\Game.dll
+R:\Projects\Github\GameMap\Game\Game\bin\Debug\net6.0\Game.pdb
+R:\Projects\Github\GameMap\Game\Game\obj\Debug\net6.0\Game.genruntimeconfig.cache
+R:\Projects\Github\GameMap\Game\Game\obj\Debug\net6.0\ref\Game.dll
