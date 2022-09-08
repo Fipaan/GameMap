@@ -107,11 +107,6 @@ namespace map
                                 CreateLineX((bool)argument[2], (bool)argument[3], 0, (Blocks)argument[4], ref array, (int)argument[5]);
                                 break;
                             case Arguments.right:
-                                Console.WriteLine(argument[2]);
-                                Console.WriteLine(argument[3]);
-                                Console.WriteLine(argument[4]);
-                                Console.WriteLine(argument[5]);
-                                Console.WriteLine(x);
                                 CreateLineX((bool)argument[2], (bool)argument[3], y, (Blocks)argument[4], ref array, (int)argument[5]);
                                 break;
                             case Arguments.up:

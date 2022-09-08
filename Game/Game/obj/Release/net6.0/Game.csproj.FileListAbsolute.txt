@@ -1,0 +1,15 @@
+R:\Projects\Github\GameMap\Game\Game\bin\Release\net6.0\Game.exe
+R:\Projects\Github\GameMap\Game\Game\bin\Release\net6.0\Game.deps.json
+R:\Projects\Github\GameMap\Game\Game\bin\Release\net6.0\Game.runtimeconfig.json
+R:\Projects\Github\GameMap\Game\Game\bin\Release\net6.0\Game.dll
+R:\Projects\Github\GameMap\Game\Game\bin\Release\net6.0\Game.pdb
+R:\Projects\Github\GameMap\Game\Game\obj\Release\net6.0\Game.csproj.AssemblyReference.cache
+R:\Projects\Github\GameMap\Game\Game\obj\Release\net6.0\Game.GeneratedMSBuildEditorConfig.editorconfig
+R:\Projects\Github\GameMap\Game\Game\obj\Release\net6.0\Game.AssemblyInfoInputs.cache
+R:\Projects\Github\GameMap\Game\Game\obj\Release\net6.0\Game.AssemblyInfo.cs
+R:\Projects\Github\GameMap\Game\Game\obj\Release\net6.0\Game.csproj.CoreCompileInputs.cache
+R:\Projects\Github\GameMap\Game\Game\obj\Release\net6.0\Game.dll
+R:\Projects\Github\GameMap\Game\Game\obj\Release\net6.0\refint\Game.dll
+R:\Projects\Github\GameMap\Game\Game\obj\Release\net6.0\Game.pdb
+R:\Projects\Github\GameMap\Game\Game\obj\Release\net6.0\Game.genruntimeconfig.cache
+R:\Projects\Github\GameMap\Game\Game\obj\Release\net6.0\ref\Game.dll

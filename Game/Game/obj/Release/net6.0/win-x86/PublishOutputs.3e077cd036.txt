@@ -1,0 +1,5 @@
+R:\Projects\Github\GameMap\Game.exe
+R:\Projects\Github\GameMap\Game.dll
+R:\Projects\Github\GameMap\Game.deps.json
+R:\Projects\Github\GameMap\Game.runtimeconfig.json
+R:\Projects\Github\GameMap\Game.pdb
