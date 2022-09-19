@@ -29,6 +29,25 @@ namespace map
         }
         
         ///#Other
+        //Random mismatching numbers
+        public static int[] RandomCount(int cap, int count)
+        {
+            int[] nums = new int[count];
+            int[] capNums = new int[cap];
+            Random rnd = new();
+            int randomNum;
+            for(int i = 0; i < cap; i++)
+            {
+                capNums[i] = i;
+            }
+            for(int i = 0; i < count; i++)
+            {
+                randomNum = rnd.Next(count - i);
+                nums[i] = randomNum;
+                capNums[i] = capNums[count - i];
+            }
+            return nums;
+        }
         
         //Random number between x(include) and y(exclude)
         public static int RBetween(int x, int y)
@@ -98,31 +117,32 @@ namespace map
             for (int numArgument = 0; numArgument < sizeArgs; numArgument++)
             {
                 argument = ArrayOneByTwo(arguments, numArgument);
+                if (argument[7] == null) { argument[6] = (Arguments[])Array.Empty<Arguments>(); }
                 switch (argument[0])
                 {
                     case Arguments.Blocks:
                         switch (argument[1])
                         {
                             case Arguments.left:
-                                CreateLineX((bool)argument[2], (bool)argument[3], 0, (Blocks)argument[4], ref array, (int)argument[5]);
+                                CreateLineX((bool)argument[2], (bool)argument[3], 0, (Blocks)argument[4], ref array, (Arguments[])argument[7], (int)argument[5]);
                                 break;
                             case Arguments.right:
-                                CreateLineX((bool)argument[2], (bool)argument[3], y, (Blocks)argument[4], ref array, (int)argument[5]);
+                                CreateLineX((bool)argument[2], (bool)argument[3], y, (Blocks)argument[4], ref array, (Arguments[])argument[7], (int)argument[5]);
                                 break;
                             case Arguments.up:
-                                CreateLineY((bool)argument[2], (bool)argument[3], 0, (Blocks)argument[4], ref array, (int)argument[5]);
+                                CreateLineY((bool)argument[2], (bool)argument[3], 0, (Blocks)argument[4], ref array, (Arguments[])argument[7], (int)argument[5]);
                                 break;
                             case Arguments.down:
-                                CreateLineY((bool)argument[2], (bool)argument[3], x, (Blocks)argument[4], ref array, (int)argument[5]);
+                                CreateLineY((bool)argument[2], (bool)argument[3], x, (Blocks)argument[4], ref array, (Arguments[])argument[7], (int)argument[5]);
                                 break;
                             case Arguments.lineX:
-                                CreateLineX((bool)argument[2], (bool)argument[3], (int)argument[5], (Blocks)argument[4], ref array, (int)argument[6]);
+                                CreateLineX((bool)argument[2], (bool)argument[3], (int)argument[5], (Blocks)argument[4], ref array, (Arguments[])argument[7], (int)argument[6]);
                                 break;
                             case Arguments.lineY:
-                                CreateLineY((bool)argument[2], (bool)argument[3], (int)argument[5], (Blocks)argument[4], ref array, (int)argument[6]);
+                                CreateLineY((bool)argument[2], (bool)argument[3], (int)argument[5], (Blocks)argument[4], ref array, (Arguments[])argument[7], (int)argument[6]);
                                 break;
                             case Arguments.center:
-                                CreateAtCenter((Blocks)argument[2], ref array);
+                                CreateAtCenter((Blocks)argument[2], ref array, (Arguments[])argument[7]);
                                 break;
                         }
                         break;
@@ -149,20 +169,20 @@ namespace map
                         case Blocks.Empty:
                             Console.Write("  ");
                             break;
-                        case Blocks.Check:
-                            Console.BackgroundColor = ConsoleColor.DarkGray;
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                            Console.Write("Ch");
-                            break;
-                        case Blocks.Checked:
-                            Console.BackgroundColor = ConsoleColor.DarkGray;
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Console.Write("Cd");
-                            break;
-                        case Blocks.Enemy:
+                        case Blocks.MeleeEnemy:
                             Console.BackgroundColor = ConsoleColor.DarkRed;
                             Console.ForegroundColor = ConsoleColor.White;
-                            Console.Write("II");
+                            Console.Write("MI");
+                            break;
+                        case Blocks.OneSideEnemy:
+                            Console.BackgroundColor = ConsoleColor.DarkRed;
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.Write("SI");
+                            break;
+                        case Blocks.direction:
+                            Console.BackgroundColor = ConsoleColor.Red;
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.Write("<>");
                             break;
                         case Blocks.Death:
                             Console.BackgroundColor = ConsoleColor.Red;

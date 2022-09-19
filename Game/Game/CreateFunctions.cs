@@ -1,5 +1,6 @@
 ﻿using static map.Map;
 using static map.Enums;
+using static map.DetectFunctions;
 
 namespace map
 {
@@ -24,42 +25,52 @@ namespace map
             array[x, y] = input;
         }
         //Create *count* of objects at random position
-        public static void CreateAtRandom<T>(T value, int count, ref T[,] array, bool isEmpty)
+        public static void CreateAtRandom(Blocks value, int count, ref Blocks[,] array, bool isEmpty, Arguments[] arguments)
         {
-            int countEmpty;
             if (isEmpty)
             {
-                countEmpty = Counter(Blocks.Empty, (Blocks[,])System.Convert.ChangeType(array, typeof(Blocks[,])));
+                int[,] emptyCoordinates = DetectAll(Blocks.Empty, (Blocks[,])System.Convert.ChangeType(array, typeof(Blocks[,])));
+                if(emptyCoordinates == null) { emptyCoordinates = new int[0, 0]; }
+                int countEmpty = emptyCoordinates.GetLength(0);
                 if (countEmpty == 0) { return; }
                 if (countEmpty < count) { count = countEmpty; }
+                int[] randoms = RandomCount(countEmpty, count);
+                for (int i = 0; i < count; i++)
+                {
+                    FlexibleCreateByCoordinate(emptyCoordinates[randoms[i], 0], emptyCoordinates[randoms[i], 1], ref array, value, arguments);
+                }
+                return;
             }
-            for (int i = 0; i < count; i++)
-            {
-                CreateOneAtRandom(value, ref array, isEmpty);
-            }
+            CreateOneAtRandom(value, ref array, false);
+            
         }
         //Value-Dependent Object Creation Function (random)
-        public static void FlexibleCreateAtRandom(Blocks type, int count, ref Blocks[,] array, bool isEmpty)
+        public static void FlexibleCreateAtRandom(Blocks type, int count, ref Blocks[,] array, bool isEmpty, Arguments[] arguments)
         {
             switch (type)
             {
-                case Blocks.Enemy:
-                    CreateAtRandom(Blocks.Enemy, count, ref array, isEmpty);
-                    CreateAroundAll(Blocks.Enemy, Blocks.Death, ref array, isEmpty);
+                case Blocks.MeleeEnemy:
+                    CreateAtRandom(Blocks.MeleeEnemy, count, ref array, isEmpty, arguments);
+                    CreateNearAll(Blocks.MeleeEnemy, Blocks.Death, ref array, isEmpty);
                     break;
                 default:
-                    CreateAtRandom(type, count, ref array, isEmpty);
+                    CreateAtRandom(type, count, ref array, isEmpty, arguments);
                     break;
             }
         }
         //Create object in coordinate
-        public static void FlexibleCreateByCoordinate(int x, int y, ref Blocks[,] array, Blocks value)
+        public static void FlexibleCreateByCoordinate(int x, int y, ref Blocks[,] array, Blocks value, Arguments[] arguments)
         {
             switch (value)
             {
-                case Blocks.Enemy:
+                case Blocks.OneSideEnemy:
                     array[x, y] = value;
-                    CreateAround(x, y, Blocks.Death, ref array, true);
+                    Console.Write(arguments[0]);
+                    CreateOneSide(x, y, value, ref array, arguments[0]);
+                    break;
+                case Blocks.MeleeEnemy:
+                    array[x, y] = value;
+                    CreateNear(x, y, Blocks.Death, ref array, true);
                     break;
                 default:
                     array[x, y] = value;
@@ -142,8 +153,45 @@ namespace map
                 }
             }
         }
+        //Create object in one side of coordinate
+        public static void CreateOneSide(int x, int y, Blocks value, ref Blocks[,] array, Arguments? argument)
+        {
+            if(argument == Arguments.random)
+            {
+                switch (RBetween(0, 4))
+                {
+                    case 0:
+                        argument = Arguments.left;
+                        break;
+                    case 1:
+                        argument = Arguments.right;
+                        break;
+                    case 2:
+                        argument = Arguments.up;
+                        break;
+                    case 3:
+                        argument = Arguments.down;
+                        break;
+                }
+            }
+            switch (argument)
+            {
+                case Arguments.up:
+                    array[x - 1, y] = value;
+                    break;
+                case Arguments.left:
+                    array[x, y - 1] = value;
+                    break;
+                case Arguments.right:
+                    array[x, y + 1] = value;
+                    break;
+                case Arguments.down:
+                    array[x + 1, y] = value;
+                    break;
+            }
+        }
         //Create object(s) at hollow rectangle at random position
-        public static void CreateHollow(bool isAll, bool onlyEmpty, int[] inputCoordinates, Blocks value, ref Blocks[,] array, int wide = 1, int count = 0)
+        public static void CreateHollow(bool isAll, bool onlyEmpty, int[] inputCoordinates, Blocks value, ref Blocks[,] array, Arguments[] argument, int wide = 1, int count = 0)
         {
             int minX = inputCoordinates[0];
             int minY = inputCoordinates[1];
@@ -172,7 +220,7 @@ namespace map
                         {
                             if (Equals(array[i, j], Blocks.Empty))
                             {
-                                FlexibleCreateByCoordinate(i, j, ref array, value);
+                                FlexibleCreateByCoordinate(i, j, ref array, value, argument);
                             }
                         }
                     }
@@ -183,7 +231,7 @@ namespace map
                     {
                         for (int j = minY; j < capY; j++)
                         {
-                            FlexibleCreateByCoordinate(i, j, ref array, value);
+                            FlexibleCreateByCoordinate(i, j, ref array, value, argument);
                         }
                     }
                 }
@@ -224,13 +272,13 @@ namespace map
             for (int i = 0; i < count; i++)
             {
                 random = RBetween(0, size - i);
-                FlexibleCreateByCoordinate(coordinates[random, 0], coordinates[random, 1], ref array, value);
+                FlexibleCreateByCoordinate(coordinates[random, 0], coordinates[random, 1], ref array, value, argument);
                 coordinates[random, 0] = coordinates[size - i, 0];
                 coordinates[random, 1] = coordinates[size - i, 1];
             }
         }
         //Create object(s) at line at random position
-        public static void CreateLineY(bool isAll, bool isEmpty, int x, Blocks value, ref Blocks[,] array, int count = 0)
+        public static void CreateLineY(bool isAll, bool isEmpty, int x, Blocks value, ref Blocks[,] array, Arguments[] argument, int count = 0)
         {
             int capY = array.GetLength(1);
             int[] coordinates = new int[capY];
@@ -243,14 +291,14 @@ namespace map
                     {
                         if (Equals(array[x, j], Blocks.Empty))
                         {
-                            FlexibleCreateByCoordinate(x, j, ref array, value);
+                            FlexibleCreateByCoordinate(x, j, ref array, value, argument);
                         }
                     }
                 } else
                 {
                     for (int j = 0; j < capY; j++)
                     {
-                        FlexibleCreateByCoordinate(x, j, ref array, value);
+                        FlexibleCreateByCoordinate(x, j, ref array, value, argument);
                     }
                 }
                 return;
@@ -271,14 +319,14 @@ namespace map
                     {
                         for (int j = 0; j < size; j++)
                         {
-                            FlexibleCreateByCoordinate(x, coordinates[j], ref array, value);
+                            FlexibleCreateByCoordinate(x, coordinates[j], ref array, value, argument);
                         }
                         return;
                     }
                     for(int j = 0; j < count; j++)
                     {
                         int randY = RBetween(0, size - j);
-                        FlexibleCreateByCoordinate(x, coordinates[randY], ref array, value);
+                        FlexibleCreateByCoordinate(x, coordinates[randY], ref array, value, argument);
                         coordinates[randY] = coordinates[size - (j + 1)];
                     }
                 }
@@ -286,13 +334,13 @@ namespace map
                 {
                     for (int j = 0; j < capY; j++)
                     {
-                        FlexibleCreateByCoordinate(x, coordinates[j], ref array, value);
+                        FlexibleCreateByCoordinate(x, coordinates[j], ref array, value, argument);
                     }
                     return;
                 }
             }
         }
-        public static void CreateLineX(bool isAll, bool isEmpty, int y, Blocks value, ref Blocks[,] array, int count = 0)
+        public static void CreateLineX(bool isAll, bool isEmpty, int y, Blocks value, ref Blocks[,] array, Arguments[] argument, int count = 0)
         {
             int capX = array.GetLength(0);
             int[] coordinates = new int[capX];
@@ -305,7 +353,7 @@ namespace map
                     {
                         if (Equals(array[i, y], Blocks.Empty))
                         {
-                            FlexibleCreateByCoordinate(i, y, ref array, value);
+                            FlexibleCreateByCoordinate(i, y, ref array, value, argument);
                         }
                     }
                 }
@@ -313,7 +361,7 @@ namespace map
                 {
                     for (int i = 0; i < capX; i++)
                     {
-                        FlexibleCreateByCoordinate(i, y, ref array, value);
+                        FlexibleCreateByCoordinate(i, y, ref array, value, argument);
                     }
                 }
                 return;
@@ -334,14 +382,14 @@ namespace map
                     {
                         for(int i = 0; i < size; i++)
                         {
-                            FlexibleCreateByCoordinate(coordinates[i], y, ref array, value);
+                            FlexibleCreateByCoordinate(coordinates[i], y, ref array, value, argument);
                         }
                         return;
                     }
                     for(int i = 0; i < count; i++)
                     {
                         int randX = RBetween(0, size - i);
-                        FlexibleCreateByCoordinate(coordinates[randX], y, ref array, value);
+                        FlexibleCreateByCoordinate(coordinates[randX], y, ref array, value, argument);
                         coordinates[randX] = coordinates[size - (i + 1)];
                     }
                 }
@@ -349,19 +397,19 @@ namespace map
                 {
                     for (int i = 0; i < capX; i++)
                     {
-                        FlexibleCreateByCoordinate(coordinates[i], y, ref array, value);
+                        FlexibleCreateByCoordinate(coordinates[i], y, ref array, value, argument);
                     }
                 }
             }
         }
         //Create object at center
-        public static void CreateAtCenter(Blocks value, ref Blocks[,] array)
+        public static void CreateAtCenter(Blocks value, ref Blocks[,] array, Arguments[] argument)
         {
             int x = array.GetLength(0);
             int y = array.GetLength(1);
             int centerX = (x + x % 2) / 2;
             int centerY = (y + y % 2) / 2;
-            FlexibleCreateByCoordinate(centerX, centerY, ref array, value);
+            FlexibleCreateByCoordinate(centerX, centerY, ref array, value, argument);
         }
     }
 }

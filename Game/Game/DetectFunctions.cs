@@ -1,4 +1,4 @@
-﻿namespace Game
+﻿namespace map
 {
     public class DetectFunctions
     {

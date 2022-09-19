@@ -7,7 +7,9 @@
             Empty,
             Hero,
             Wall,
-            Enemy,
+            MeleeEnemy,
+            OneSideEnemy,
+            direction,
             Death,
             Check,
             Checked,
@@ -41,7 +43,8 @@
             rect,
             center,
             corners,
-            random
+            random,
+            _null
         }
         //Layouts 3x3
         public enum Layout3
